@@ -1,26 +1,38 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {getAllListData} from '../actions'
+import { getAllListData } from '../actions';
 
 class List extends Component {
-    componentDidMount() {
+    componentDidMount(){
         this.props.getAllListData();
     }
+
     render(){
         const listElements = this.props.list.map( item => {
             return <li key={item._id} className="collection-item">{item.title}</li>
-        })
+        });
         return (
-            <ul className="collection">
-            <li className="collection-item"> {listElements} </li>
-            </ul>
-        )
+            <div>
+                <h1 className="center">Redux To Do List</h1>
+                <div className="row">
+                    <div className="col s12 right-align">
+                        <Link to="/add-item" className="btn blue darken-2">Add Item</Link>
+                    </div>
+                </div>
+
+                <ul className="collection">
+                    {listElements}
+                </ul>
+            </div>
+        );
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state){
     return {
-        list: state.list.all,
+        list: state.list.all
     }
 }
-export default connect(mapStateToProps , {getAllListData: getAllListData})(List);
+
+export default connect(mapStateToProps, {getAllListData: getAllListData})(List);
